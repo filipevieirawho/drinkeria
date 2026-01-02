@@ -63,7 +63,20 @@ export function OverviewChart({ data }: { data: ChartData[] }) {
                             <YAxis type="category" dataKey="name" width={100} />
                             <Tooltip
                                 cursor={{ fill: 'transparent' }}
-                                contentStyle={{ borderRadius: '8px', border: '1px solid #e2e8f0', boxShadow: 'none' }}
+                                content={({ active, payload }) => {
+                                    if (active && payload && payload.length) {
+                                        const data = payload[0].payload
+                                        return (
+                                            <div className="rounded-lg border bg-background p-2 shadow-sm">
+                                                <div className="grid grid-cols-2 gap-2">
+                                                    <span className="font-medium">{data.name}:</span>
+                                                    <span className="font-bold">{data.value}</span>
+                                                </div>
+                                            </div>
+                                        )
+                                    }
+                                    return null
+                                }}
                             />
                             <Bar dataKey="value" radius={[0, 4, 4, 0]}>
                                 <LabelList dataKey="value" position="right" />
