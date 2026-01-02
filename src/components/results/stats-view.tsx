@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { BartenderStats } from "@/components/results/bartender-stats"
+import { IngredientsStats } from "@/components/results/ingredients-stats"
 import { Loader2 } from "lucide-react"
 
 type Stats = {
@@ -28,6 +29,11 @@ type Stats = {
         photo?: string | null
         count: number
         percentage: string
+    }[]
+    ingredientStats: {
+        name: string
+        unit: string
+        quantity: number
     }[]
 }
 
@@ -95,6 +101,8 @@ export function StatsView({ slug }: { slug: string }) {
             </div>
 
             <BartenderStats stats={data.bartenderStats} />
+
+            <IngredientsStats stats={data.ingredientStats} />
         </div>
     )
 }
