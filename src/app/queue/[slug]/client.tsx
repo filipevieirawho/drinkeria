@@ -34,6 +34,42 @@ export function QueueClient({ eventId }: { eventId: string }) {
         return () => clearInterval(interval)
     }, [eventId])
 
+    // Screen Wake Lock
+    useEffect(() => {
+        let wakeLock: any = null;
+
+        const requestWakeLock = async () => {
+            try {
+                if ('wakeLock' in navigator) {
+                    wakeLock = await (navigator as any).wakeLock.request('screen');
+                    console.log('Wake Lock is active!');
+                }
+            } catch (err) {
+                console.error(`${err.name}, ${err.message}`);
+            }
+        };
+
+        requestWakeLock();
+
+        const handleVisibilityChange = () => {
+            if (wakeLock !== null && document.visibilityState === 'visible') {
+                requestWakeLock();
+            }
+        };
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        return () => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+            if (wakeLock !== null) {
+                wakeLock.release()
+                    .then(() => {
+                        console.log('Wake Lock released');
+                    });
+            }
+        };
+    }, []);
+
     const handleItemClick = async (item: QueueItem) => {
         try {
             await updateDrinkStatus(item.id, 'COMPLETED')
