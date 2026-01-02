@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(cuid())
+  username  String     @unique
+  password  String
+  role      String     @default("VIEWER")
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  logs      DrinkLog[]
+}
+
+model Drink {
+  id          String       @id @default(cuid())
+  name        String
+  description String?
+  ingredients String?
+  type        String       @default("CLASSIC")
+  image       String?
+  active      Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  logs        DrinkLog[]
+  events      EventDrink[]
+}
+
+model Bartender {
+  id        String           @id @default(cuid())
+  name      String
+  surname   String
+  phone     String?
+  photo     String?
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  email     String?          @unique
+  password  String?
+  logs      DrinkLog[]
+  events    EventBartender[]
+}
+
+model Event {
+  id         String           @id @default(cuid())
+  name       String
+  date       DateTime
+  location   String?
+  slug       String           @unique
+  status     String           @default("PLANNED")
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+  logs       DrinkLog[]
+  bartenders EventBartender[]
+  drinks     EventDrink[]
+}
+
+model EventDrink {
+  id      String @id @default(cuid())
+  eventId String
+  drinkId String
+  drink   Drink  @relation(fields: [drinkId], references: [id], onDelete: Cascade)
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, drinkId])
+}
+
+model EventBartender {
+  id          String    @id @default(cuid())
+  eventId     String
+  bartenderId String
+  bartender   Bartender @relation(fields: [bartenderId], references: [id], onDelete: Cascade)
+  event       Event     @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, bartenderId])
+}
+
+model DrinkLog {
+  id           String     @id @default(cuid())
+  eventId      String
+  drinkId      String
+  bartenderId  String?
+  timestamp    DateTime   @default(now())
+  customerName String?
+  status       String     @default("COMPLETED")
+  userId       String?
+  quantity     Int        @default(1)
+  user         User?      @relation(fields: [userId], references: [id])
+  bartender    Bartender? @relation(fields: [bartenderId], references: [id])
+  drink        Drink      @relation(fields: [drinkId], references: [id], onDelete: Cascade)
+  event        Event      @relation(fields: [eventId], references: [id], onDelete: Cascade)
+}
