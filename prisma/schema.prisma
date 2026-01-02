@@ -51,6 +51,7 @@ model Event {
   name       String
   date       DateTime
   location   String?
+  peopleCount Int?
   slug       String           @unique
   status     String           @default("PLANNED")
   createdAt  DateTime         @default(now())

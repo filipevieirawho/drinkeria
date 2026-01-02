@@ -16,6 +16,7 @@ export async function createEvent(formData: FormData) {
     const name = formData.get("name") as string
     const date = new Date(formData.get("date") as string)
     const location = formData.get("location") as string
+    const peopleCount = formData.get("peopleCount") ? Number(formData.get("peopleCount")) : null
     const drinkIds = formData.getAll("drinks") as string[]
     const bartenderIds = formData.getAll("bartenders") as string[]
 
@@ -27,6 +28,7 @@ export async function createEvent(formData: FormData) {
             name,
             date,
             location,
+            peopleCount,
             slug,
             status: "PLANNED",
             drinks: {
@@ -55,6 +57,7 @@ export async function updateEvent(id: string, formData: FormData) {
     const name = formData.get("name") as string
     const date = new Date(formData.get("date") as string)
     const location = formData.get("location") as string
+    const peopleCount = formData.get("peopleCount") ? Number(formData.get("peopleCount")) : null
     const status = formData.get("status") as string
     const drinkIds = formData.getAll("drinks") as string[]
     const bartenderIds = formData.getAll("bartenders") as string[]
@@ -68,6 +71,7 @@ export async function updateEvent(id: string, formData: FormData) {
                 name,
                 date,
                 location,
+                peopleCount,
                 status,
             },
         })

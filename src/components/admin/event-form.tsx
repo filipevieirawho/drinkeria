@@ -73,6 +73,18 @@ export function EventForm({
                         />
                     </div>
 
+                    <div className="space-y-2">
+                        <Label htmlFor="peopleCount">Quantidade de Pessoas</Label>
+                        <Input
+                            id="peopleCount"
+                            name="peopleCount"
+                            type="number"
+                            min="0"
+                            defaultValue={event?.peopleCount || ""}
+                            placeholder="ex: 100"
+                        />
+                    </div>
+
                     {event && (
                         <div className="space-y-2">
                             <Label htmlFor="status">Status</Label>
