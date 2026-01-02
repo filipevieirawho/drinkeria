@@ -20,7 +20,7 @@ export function IngredientsStats({ stats }: { stats: IngredientStat[] }) {
 
     return (
         <div className="space-y-4">
-            <h2 className="text-lg font-semibold">Consumo de Ingredientes</h2>
+            <h2 className="text-lg font-bold px-1">Consumo de Ingredientes</h2>
             <div className="border rounded-lg">
                 <Table>
                     <TableHeader>
