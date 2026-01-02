@@ -65,7 +65,7 @@ export function MenuClient({ eventId, drinks }: MenuClientProps) {
             })
 
             toast.success("Pedido Confirmado!", {
-                description: `Obrigado, ${customerName}! Seu drink já está sendo preparado. :)`,
+                description: `Obrigado, ${customerName}! Seu drink já está na fila e será preparado em breve. 🍸`,
                 duration: 5000,
                 classNames: {
                     title: "text-xl font-bold",
