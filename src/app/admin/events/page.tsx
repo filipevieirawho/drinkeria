@@ -10,7 +10,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import { Edit, Trash2, ExternalLink, BarChart3, Utensils, ListOrdered } from "lucide-react"
+import { Edit, Trash2, ExternalLink, BarChart3, Martini, ListOrdered } from "lucide-react"
 
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
@@ -70,7 +70,7 @@ export default async function EventsPage() {
                                                 target="_blank"
                                                 title="Abrir Cardápio"
                                             >
-                                                <Utensils className="h-4 w-4" />
+                                                <Martini className="h-4 w-4" />
                                             </Link>
                                         </Button>
                                         <Button variant="ghost" size="icon" asChild>
