@@ -44,10 +44,6 @@ export default async function EventsPage() {
                     <TableHeader>
                         <TableRow>
                             <TableHead>Nome</TableHead>
-                            <TableHead className="hidden md:table-cell">Data</TableHead>
-                            <TableHead className="hidden md:table-cell">Status</TableHead>
-                            <TableHead className="hidden lg:table-cell">Bebidas</TableHead>
-                            <TableHead className="hidden lg:table-cell">Bartenders</TableHead>
                             <TableHead className="text-right">Ações</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -57,7 +53,7 @@ export default async function EventsPage() {
                                 <TableCell className="font-medium">
                                     <div className="flex flex-col">
                                         <span>{event.name}</span>
-                                        <span className="text-xs text-muted-foreground md:hidden">
+                                        <span className="text-xs text-muted-foreground">
                                             {new Date(event.date).toLocaleDateString()}
                                         </span>
                                         <span className="text-xs text-muted-foreground">
@@ -65,14 +61,6 @@ export default async function EventsPage() {
                                         </span>
                                     </div>
                                 </TableCell>
-                                <TableCell className="hidden md:table-cell">
-                                    {new Date(event.date).toLocaleDateString()}
-                                </TableCell>
-                                <TableCell className="hidden md:table-cell">
-                                    <Badge variant="outline">{event.status}</Badge>
-                                </TableCell>
-                                <TableCell className="hidden lg:table-cell">{event._count.drinks}</TableCell>
-                                <TableCell className="hidden lg:table-cell">{event._count.bartenders}</TableCell>
                                 <TableCell className="text-right">
                                     <div className="flex items-center justify-end gap-2">
 
