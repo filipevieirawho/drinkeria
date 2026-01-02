@@ -15,9 +15,20 @@ export async function createDrink(formData: FormData) {
 
     const name = formData.get("name") as string
     const description = formData.get("description") as string
-    const ingredients = formData.get("ingredients") as string
+    let ingredients = formData.get("ingredients") as string
     const type = formData.get("type") as string
     const image = formData.get("image") as string
+
+    // Validate and clean ingredients JSON
+    try {
+        const parsed = JSON.parse(ingredients)
+        if (Array.isArray(parsed)) {
+            const cleaned = parsed.filter((i: any) => i.name?.trim() || i.quantity?.trim())
+            ingredients = JSON.stringify(cleaned)
+        }
+    } catch (e) {
+        // If it's not valid JSON, keep it as is
+    }
 
     await prisma.drink.create({
         data: {
@@ -42,10 +53,21 @@ export async function updateDrink(id: string, formData: FormData) {
 
     const name = formData.get("name") as string
     const description = formData.get("description") as string
-    const ingredients = formData.get("ingredients") as string
+    let ingredients = formData.get("ingredients") as string
     const type = formData.get("type") as string
     const image = formData.get("image") as string
     const active = formData.get("active") === "on"
+
+    // Validate and clean ingredients JSON
+    try {
+        const parsed = JSON.parse(ingredients)
+        if (Array.isArray(parsed)) {
+            const cleaned = parsed.filter((i: any) => i.name?.trim() || i.quantity?.trim())
+            ingredients = JSON.stringify(cleaned)
+        }
+    } catch (e) {
+        // If it's not valid JSON, keep it as is (backward compatibility or empty)
+    }
 
     await prisma.drink.update({
         where: { id },
