@@ -10,7 +10,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import { Edit, Trash2, ExternalLink, BarChart3, Martini, ListOrdered } from "lucide-react"
+import { Edit, Trash2, ExternalLink, BarChart3, Martini, ListOrdered, Calendar, Clock } from "lucide-react"
 
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
@@ -53,9 +53,16 @@ export default async function EventsPage() {
                                 <TableCell className="font-medium">
                                     <div className="flex flex-col">
                                         <span className="text-base">{event.name}</span>
-                                        <span className="text-xs text-muted-foreground">
-                                            {new Date(event.date).toLocaleDateString()} às {new Date(event.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                        </span>
+                                        <div className="flex items-center gap-3 text-xs text-muted-foreground mt-1">
+                                            <div className="flex items-center gap-1">
+                                                <Calendar className="h-3 w-3" />
+                                                <span>{new Date(event.date).toLocaleDateString()}</span>
+                                            </div>
+                                            <div className="flex items-center gap-1">
+                                                <Clock className="h-3 w-3" />
+                                                <span>{new Date(event.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </TableCell>
                                 <TableCell className="text-right">
