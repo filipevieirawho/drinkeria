@@ -25,6 +25,15 @@ export async function getEventStats(slug: string) {
 
     if (!event) return null
 
+    // Explicitly fetch peopleCount to ensure we have the latest value
+    const eventData = await prisma.event.findUnique({
+        where: { slug },
+        select: { peopleCount: true }
+    })
+
+    console.log("getEventStats event:", JSON.stringify(event, null, 2))
+    console.log("getEventStats peopleCount:", eventData?.peopleCount)
+
     const totalDrinks = event.logs.reduce((sum: number, log: any) => sum + (log.quantity || 1), 0)
 
     const stats = event.drinks.map((ed: { drinkId: string; drink: { id: string; name: string } }) => {
@@ -143,6 +152,7 @@ export async function getEventStats(slug: string) {
     return {
         eventName: event.name,
         totalLogs: totalDrinks,
+        peopleCount: eventData?.peopleCount,
         stats,
         bartenderStats,
         ingredientStats
