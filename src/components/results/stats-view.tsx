@@ -18,6 +18,7 @@ import { Loader2 } from "lucide-react"
 type Stats = {
     eventName: string
     totalLogs: number
+    peopleCount?: number | null
     stats: {
         id: string
         name: string
@@ -68,13 +69,21 @@ export function StatsView({ slug }: { slug: string }) {
 
     return (
         <div className="space-y-6">
-            <div className="grid gap-6 md:grid-cols-1">
+            <div className="grid gap-6 grid-cols-2">
                 <Card>
                     <CardHeader>
                         <CardTitle>Servidos</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="text-4xl font-bold">{data.totalLogs}</div>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Pessoas</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-4xl font-bold">{data.peopleCount || "-"}</div>
                     </CardContent>
                 </Card>
             </div>
