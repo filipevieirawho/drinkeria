@@ -56,11 +56,11 @@ export default async function EventsPage() {
                                         <div className="flex items-center gap-3 text-xs text-muted-foreground mt-1">
                                             <div className="flex items-center gap-1">
                                                 <Calendar className="h-3 w-3" />
-                                                <span>{new Date(event.date).toLocaleDateString()}</span>
+                                                <span>{new Date(event.date).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit' })}</span>
                                             </div>
                                             <div className="flex items-center gap-1">
                                                 <Clock className="h-3 w-3" />
-                                                <span>{new Date(event.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                                <span>{new Date(event.date).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', hour12: false })}</span>
                                             </div>
                                         </div>
                                     </div>
