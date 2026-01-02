@@ -4,8 +4,7 @@ import { notFound } from "next/navigation"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { redirect } from "next/navigation"
-import { deleteEvent } from "../actions"
-import { Button } from "@/components/ui/button"
+import { DeleteEventButton } from "@/components/admin/delete-event-button"
 
 export default async function EditEventPage({
     params,
@@ -37,16 +36,7 @@ export default async function EditEventPage({
         <div className="space-y-6">
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold tracking-tight">Editar Evento</h1>
-                <form
-                    action={async () => {
-                        "use server"
-                        await deleteEvent(event.id)
-                    }}
-                >
-                    <Button variant="destructive" type="submit">
-                        Excluir Evento
-                    </Button>
-                </form>
+                <DeleteEventButton eventId={event.id} eventName={event.name} />
             </div>
             <EventForm event={event} drinks={drinks} bartenders={bartenders} />
         </div>
