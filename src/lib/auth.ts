@@ -20,6 +20,17 @@ export const authOptions: NextAuthOptions = {
             },
             async authorize(credentials) {
                 console.log("Auth attempt for:", credentials?.username)
+
+                // DEBUG: Check the DATABASE_URL
+                const dbUrl = process.env.DATABASE_URL;
+                if (dbUrl) {
+                    console.log("DEBUG: DATABASE_URL length:", dbUrl.length);
+                    console.log("DEBUG: DATABASE_URL starts with:", dbUrl.substring(0, 25)); // Show protocol and part of user
+                    console.log("DEBUG: DATABASE_URL ends with:", dbUrl.substring(dbUrl.length - 20)); // Show port/db/params
+                } else {
+                    console.log("DEBUG: DATABASE_URL is UNDEFINED");
+                }
+
                 if (!credentials?.username || !credentials?.password) {
                     console.log("Missing credentials")
                     return null
