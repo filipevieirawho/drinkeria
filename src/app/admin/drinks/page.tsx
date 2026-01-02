@@ -17,6 +17,13 @@ import { DrinksToolbar } from "@/components/admin/drinks-toolbar"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 
+const drinkTypeMap: Record<string, string> = {
+    CLASSIC: "Clássico",
+    SIGNATURE: "Assinatura",
+    MOCKTAIL: "Mocktail",
+    SHOT: "Shot",
+}
+
 export default async function DrinksPage({
     searchParams,
 }: {
@@ -69,7 +76,9 @@ export default async function DrinksPage({
                             <TableRow key={drink.id}>
                                 <TableCell className="font-medium">{drink.name}</TableCell>
                                 <TableCell>
-                                    <Badge variant="outline" className="text-[10px] font-normal">{drink.type}</Badge>
+                                    <Badge variant="outline" className="text-[10px] font-normal">
+                                        {drinkTypeMap[drink.type] || drink.type}
+                                    </Badge>
                                 </TableCell>
                                 <TableCell className="text-right">
                                     {role === "ADMIN" && (
