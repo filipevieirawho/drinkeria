@@ -2,9 +2,9 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-console.log('DATABASE_URL:', process.env.DATABASE_URL)
-
 async function main() {
+    console.log('Starting seed...')
+    
     // Create Admin User
     const admin = await prisma.user.upsert({
         where: { username: 'admin' },
@@ -16,7 +16,7 @@ async function main() {
         },
     })
 
-    console.log({ admin })
+    console.log('Admin user checked/created:', admin.username)
 
     // Create Drinks
     const drinks = [
@@ -47,23 +47,32 @@ async function main() {
     ]
 
     for (const drink of drinks) {
-        const d = await prisma.drink.create({
-            data: drink,
+        const d = await prisma.drink.upsert({
+            where: { id: drink.name.toLowerCase().replace(/\s+/g, '-') }, // Using a slug-like ID for idempotency in seed
+            update: drink,
+            create: {
+                id: drink.name.toLowerCase().replace(/\s+/g, '-'),
+                ...drink
+            },
         })
-        console.log(`Created drink with id: ${d.id}`)
+        console.log(`Checked/Created drink: ${d.name}`)
     }
 
     // Create Bartender
-    const bartender = await prisma.bartender.create({
-        data: {
+    const bartender = await prisma.bartender.upsert({
+        where: { email: 'john.doe@example.com' },
+        update: {},
+        create: {
             name: 'John',
             surname: 'Doe',
+            email: 'john.doe@example.com',
             phone: '123456789',
             photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80',
         },
     })
 
-    console.log({ bartender })
+    console.log('Bartender checked/created:', bartender.name)
+    console.log('Seed finished successfully.')
 }
 
 main()
@@ -71,7 +80,7 @@ main()
         await prisma.$disconnect()
     })
     .catch(async (e) => {
-        console.error(e)
+        console.error('Error during seed:', e)
         await prisma.$disconnect()
         process.exit(1)
     })
