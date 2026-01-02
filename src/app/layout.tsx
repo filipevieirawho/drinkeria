@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PAD DRINKS",
+  title: "🍸 Drinkeria",
   description: "Sistema de gestão de drinks para eventos",
 };
 
