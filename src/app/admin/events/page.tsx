@@ -33,7 +33,7 @@ export default async function EventsPage() {
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold tracking-tight">Eventos</h1>
                 {role === "ADMIN" && (
-                    <Button asChild className="bg-mojito hover:bg-mojito/90 text-white">
+                    <Button asChild className="bg-saas-blue hover:bg-saas-blue/90 text-white">
                         <Link href="/admin/events/new">Novo Evento</Link>
                     </Button>
                 )}

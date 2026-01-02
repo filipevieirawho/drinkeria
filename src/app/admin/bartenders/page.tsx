@@ -33,7 +33,7 @@ export default async function BartendersPage() {
         <div className="space-y-6">
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold tracking-tight">Bartenders</h1>
-                <Button asChild className="bg-mojito hover:bg-mojito/90 text-white">
+                <Button asChild className="bg-saas-blue hover:bg-saas-blue/90 text-white">
                     <Link href="/admin/bartenders/new">Add Bartender</Link>
                 </Button>
             </div>

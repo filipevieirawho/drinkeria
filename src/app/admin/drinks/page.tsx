@@ -49,7 +49,7 @@ export default async function DrinksPage({
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold tracking-tight">Drinks</h1>
                 {role === "ADMIN" && (
-                    <Button asChild className="bg-mojito hover:bg-mojito/90 text-white">
+                    <Button asChild className="bg-saas-blue hover:bg-saas-blue/90 text-white">
                         <Link href="/admin/drinks/new">Add Drink</Link>
                     </Button>
                 )}
@@ -76,7 +76,7 @@ export default async function DrinksPage({
                             <TableRow key={drink.id}>
                                 <TableCell className="font-medium">{drink.name}</TableCell>
                                 <TableCell>
-                                    <Badge variant="outline" className="text-[10px] font-normal">
+                                    <Badge variant="outline" className="text-[10px] font-normal uppercase">
                                         {drinkTypeMap[drink.type] || drink.type}
                                     </Badge>
                                 </TableCell>
