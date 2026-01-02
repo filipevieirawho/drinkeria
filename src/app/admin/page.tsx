@@ -103,7 +103,7 @@ export default async function AdminDashboard({
                 <Card className="flex flex-col shadow-none border">
                     <CardHeader className="flex flex-row items-center justify-start space-y-0 pb-2 gap-2">
                         <Martini className="h-4 w-4 text-primary" />
-                        <CardTitle className="text-sm font-medium">Drinks Servidos</CardTitle>
+                        <CardTitle className="text-sm font-medium">Servidos</CardTitle>
                     </CardHeader>
                     <CardContent className="flex-1 flex flex-col justify-center">
                         <div className="text-2xl font-bold">{formatNumber(totalDrinksServed)}</div>

@@ -65,7 +65,7 @@ export function StatsView({ slug }: { slug: string }) {
             <div className="grid gap-6 md:grid-cols-1">
                 <Card>
                     <CardHeader>
-                        <CardTitle>Drinks Servidos</CardTitle>
+                        <CardTitle>Servidos</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="text-4xl font-bold">{data.totalLogs}</div>
