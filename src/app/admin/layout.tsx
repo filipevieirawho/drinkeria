@@ -22,7 +22,7 @@ export default async function AdminLayout({
                 <div className="container px-4 py-4 space-y-4">
                     <div className="flex items-center justify-between">
                         <Link href="/admin" className="text-xl font-bold">
-                            🍸 Drinkeria
+                            Drinker.IA
                         </Link>
                         <UserNav user={{ name: session.user.name, email: session.user.email }} />
                     </div>
