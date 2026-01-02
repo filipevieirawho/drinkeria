@@ -131,7 +131,7 @@ export function DrinkForm({ drink }: { drink?: Drink }) {
                         <SelectValue placeholder="Selecione o tipo" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="CLASSIC">Clássico</SelectItem>
+                        <SelectItem value="CLASSIC">Clássicos</SelectItem>
                         <SelectItem value="SIGNATURE">Assinatura</SelectItem>
                         <SelectItem value="MOCKTAIL">Mocktail (Sem Álcool)</SelectItem>
                         <SelectItem value="SHOT">Shot</SelectItem>

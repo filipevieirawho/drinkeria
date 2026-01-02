@@ -18,7 +18,7 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 
 const drinkTypeMap: Record<string, string> = {
-    CLASSIC: "Clássico",
+    CLASSIC: "Clássicos",
     SIGNATURE: "Assinatura",
     MOCKTAIL: "Mocktail",
     SHOT: "Shot",
