@@ -109,7 +109,7 @@ export function DrinkForm({ drink }: { drink?: Drink }) {
                         </div>
                     ))}
                 </div>
-                <Button type="button" variant="outline" size="sm" onClick={addIngredient} className="mt-2">
+                <Button type="button" size="sm" onClick={addIngredient} className="mt-2 bg-saas-blue hover:bg-saas-blue/90 text-white">
                     <Plus className="h-4 w-4 mr-2" /> Adicionar Ingrediente
                 </Button>
             </div>
