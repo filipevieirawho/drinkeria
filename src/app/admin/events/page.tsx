@@ -52,7 +52,7 @@ export default async function EventsPage() {
                             <TableRow key={event.id}>
                                 <TableCell className="font-medium">
                                     <div className="flex flex-col">
-                                        <span>{event.name}</span>
+                                        <span className="text-base">{event.name}</span>
                                         <span className="text-xs text-muted-foreground">
                                             {new Date(event.date).toLocaleDateString()}
                                         </span>
