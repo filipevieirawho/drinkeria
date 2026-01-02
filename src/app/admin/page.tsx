@@ -87,7 +87,7 @@ export default async function AdminDashboard({
             <div className="grid gap-4 grid-cols-2">
                 <Card className="flex flex-col shadow-none border">
                     <CardHeader className="flex flex-row items-center justify-start space-y-0 pb-2 gap-2">
-                        <Martini className="h-4 w-4 text-primary" />
+                        <Martini className="h-4 w-4 text-muted-foreground" />
                         <CardTitle className="text-sm font-medium">Servidos</CardTitle>
                     </CardHeader>
                     <CardContent className="flex-1 flex flex-col justify-center">

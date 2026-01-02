@@ -70,7 +70,7 @@ export function StatsView({ slug }: { slug: string }) {
     return (
         <div className="space-y-6">
             <div className="grid gap-6 grid-cols-2">
-                <Card>
+                <Card className="shadow-none border">
                     <CardHeader>
                         <CardTitle>Servidos</CardTitle>
                     </CardHeader>
@@ -78,7 +78,7 @@ export function StatsView({ slug }: { slug: string }) {
                         <div className="text-4xl font-bold">{data.totalLogs}</div>
                     </CardContent>
                 </Card>
-                <Card>
+                <Card className="shadow-none border">
                     <CardHeader>
                         <CardTitle>Pessoas</CardTitle>
                     </CardHeader>
