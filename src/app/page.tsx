@@ -12,14 +12,14 @@ export default function Home() {
           </div>
         </div>
         <h1 className="text-4xl font-bold tracking-tight lg:text-5xl mb-4">
-          Drinker.IA
+          🍸 Drinker.IA
         </h1>
         <p className="text-muted-foreground text-lg">
           Sistema de Gestão para Eventos
         </p>
         <div className="pt-4">
           <Button asChild size="lg" className="w-full">
-            <Link href="/admin">Access Dashboard</Link>
+            <Link href="/admin">Acessar Dashboard</Link>
           </Button>
         </div>
       </div>

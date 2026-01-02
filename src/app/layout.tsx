@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Drinker.IA",
+  title: "🍸 Drinker.IA",
   description: "Sistema de gestão de drinks para eventos",
 };
 
