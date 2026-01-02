@@ -75,15 +75,7 @@ export default async function EventsPage() {
                                 <TableCell className="hidden lg:table-cell">{event._count.bartenders}</TableCell>
                                 <TableCell className="text-right">
                                     <div className="flex items-center justify-end gap-2">
-                                        <Button variant="ghost" size="icon" asChild>
-                                            <Link
-                                                href={`/pad/${event.slug}`}
-                                                target="_blank"
-                                                title="Abrir Pad"
-                                            >
-                                                <ExternalLink className="h-4 w-4" />
-                                            </Link>
-                                        </Button>
+
                                         <Button variant="ghost" size="icon" asChild>
                                             <Link
                                                 href={`/menu/${event.slug}`}
