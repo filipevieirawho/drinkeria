@@ -76,10 +76,75 @@ export async function getEventStats(slug: string) {
         })
         .sort((a, b) => b.count - a.count)
 
+    // Calculate Ingredient Stats
+    const ingredientsMap: Record<string, { name: string; unit: string; quantity: number }> = {}
+
+    event.logs.forEach((log: any) => {
+        const drink = event.drinks.find((d: any) => d.drinkId === log.drinkId)?.drink
+        if (!drink || !drink.ingredients) return
+
+        try {
+            const ingredients = JSON.parse(drink.ingredients)
+            if (Array.isArray(ingredients)) {
+                ingredients.forEach((ing: { quantity: string; name: string }) => {
+                    if (!ing.name) return
+
+                    let value = 0
+                    let unit = ""
+
+                    const qtyStr = ing.quantity.trim()
+
+                    // Try parsing fraction (e.g. "1/2")
+                    if (qtyStr.match(/^\d+\/\d+$/)) {
+                        const [num, den] = qtyStr.split('/').map(Number)
+                        if (den !== 0) value = num / den
+                    }
+                    // Try parsing number + unit (e.g. "50ml", "50 ml", "1")
+                    else {
+                        const match = qtyStr.match(/^([\d.,]+)\s*(.*)$/)
+                        if (match) {
+                            value = parseFloat(match[1].replace(',', '.'))
+                            unit = match[2].trim()
+                        } else {
+                            // Fallback: if no number found, maybe just count 1 per drink? 
+                            // Or keep value 0 and just list it. 
+                            // Let's assume value 0 for non-numeric quantities like "Q.B."
+                            unit = qtyStr
+                        }
+                    }
+
+                    if (isNaN(value)) value = 0
+
+                    const logQty = log.quantity || 1
+                    const totalQty = value * logQty
+
+                    // Key by name + unit to separate "Rum (ml)" from "Rum (garrafa)" if that happens
+                    // Normalize name to lowercase for grouping
+                    const key = `${ing.name.toLowerCase()}-${unit.toLowerCase()}`
+
+                    if (!ingredientsMap[key]) {
+                        ingredientsMap[key] = {
+                            name: ing.name, // Keep original casing for display
+                            unit: unit,
+                            quantity: 0
+                        }
+                    }
+                    ingredientsMap[key].quantity += totalQty
+                })
+            }
+        } catch (e) {
+            // Ignore parsing errors
+        }
+    })
+
+    const ingredientStats = Object.values(ingredientsMap)
+        .sort((a, b) => b.quantity - a.quantity)
+
     return {
         eventName: event.name,
         totalLogs: totalDrinks,
         stats,
-        bartenderStats
+        bartenderStats,
+        ingredientStats
     }
 }
