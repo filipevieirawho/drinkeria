@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -13,9 +14,45 @@ import {
 } from "@/components/ui/select"
 import { createDrink, updateDrink } from "@/app/admin/drinks/actions"
 import { Drink } from "@prisma/client"
+import { Plus, Trash2 } from "lucide-react"
+
+type Ingredient = {
+    quantity: string
+    name: string
+}
 
 export function DrinkForm({ drink }: { drink?: Drink }) {
     const action = drink ? updateDrink.bind(null, drink.id) : createDrink
+
+    // Parse initial ingredients
+    const getInitialIngredients = (): Ingredient[] => {
+        if (!drink?.ingredients) return [{ quantity: "", name: "" }]
+        try {
+            const parsed = JSON.parse(drink.ingredients)
+            if (Array.isArray(parsed)) return parsed
+            return [{ quantity: "", name: drink.ingredients }]
+        } catch {
+            return [{ quantity: "", name: drink.ingredients }]
+        }
+    }
+
+    const [ingredients, setIngredients] = useState<Ingredient[]>(getInitialIngredients())
+
+    const addIngredient = () => {
+        setIngredients([...ingredients, { quantity: "", name: "" }])
+    }
+
+    const removeIngredient = (index: number) => {
+        const newIngredients = [...ingredients]
+        newIngredients.splice(index, 1)
+        setIngredients(newIngredients)
+    }
+
+    const updateIngredient = (index: number, field: keyof Ingredient, value: string) => {
+        const newIngredients = [...ingredients]
+        newIngredients[index][field] = value
+        setIngredients(newIngredients)
+    }
 
     return (
         <form action={action} className="space-y-6 max-w-2xl">
@@ -41,13 +78,40 @@ export function DrinkForm({ drink }: { drink?: Drink }) {
             </div>
 
             <div className="space-y-2">
-                <Label htmlFor="ingredients">Ingredientes</Label>
-                <Input
-                    id="ingredients"
-                    name="ingredients"
-                    defaultValue={drink?.ingredients || ""}
-                    placeholder="ex: Rum, Hortelã, Limão"
-                />
+                <Label>Ingredientes</Label>
+                <input type="hidden" name="ingredients" value={JSON.stringify(ingredients)} />
+                <div className="space-y-3">
+                    {ingredients.map((ing, index) => (
+                        <div key={index} className="flex gap-2 items-start">
+                            <div className="w-24 flex-shrink-0">
+                                <Input
+                                    placeholder="Qtd."
+                                    value={ing.quantity}
+                                    onChange={(e) => updateIngredient(index, "quantity", e.target.value)}
+                                />
+                            </div>
+                            <div className="flex-1">
+                                <Input
+                                    placeholder="Ingrediente (ex: Rum Carta Branca)"
+                                    value={ing.name}
+                                    onChange={(e) => updateIngredient(index, "name", e.target.value)}
+                                />
+                            </div>
+                            <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => removeIngredient(index)}
+                                disabled={ingredients.length === 1 && !ingredients[0].name && !ingredients[0].quantity}
+                            >
+                                <Trash2 className="h-4 w-4 text-muted-foreground hover:text-destructive" />
+                            </Button>
+                        </div>
+                    ))}
+                </div>
+                <Button type="button" variant="outline" size="sm" onClick={addIngredient} className="mt-2">
+                    <Plus className="h-4 w-4 mr-2" /> Adicionar Ingrediente
+                </Button>
             </div>
 
             <div className="space-y-2">
