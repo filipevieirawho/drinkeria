@@ -19,52 +19,67 @@ export const authOptions: NextAuthOptions = {
                 password: { label: "Password", type: "password" },
             },
             async authorize(credentials) {
+                console.log("Auth attempt for:", credentials?.username)
                 if (!credentials?.username || !credentials?.password) {
+                    console.log("Missing credentials")
                     return null
                 }
 
-                // First, check the User table (Admins)
-                const user = await prisma.user.findUnique({
-                    where: {
-                        username: credentials.username,
-                    },
-                })
+                try {
+                    // First, check the User table (Admins)
+                    const user = await prisma.user.findUnique({
+                        where: {
+                            username: credentials.username,
+                        },
+                    })
 
-                if (user) {
-                    // In production, compare hashed password!
-                    if (user.password !== credentials.password) {
-                        return null
+                    console.log("User found in DB:", user ? "Yes" : "No")
+
+                    if (user) {
+                        // In production, compare hashed password!
+                        if (user.password !== credentials.password) {
+                            console.log("Password mismatch for user")
+                            return null
+                        }
+
+                        console.log("Login successful for admin")
+                        return {
+                            id: user.id,
+                            name: user.username,
+                            role: user.role,
+                            userType: "user",
+                        }
                     }
 
-                    return {
-                        id: user.id,
-                        name: user.username,
-                        role: user.role,
-                        userType: "user",
+                    // Second, check the Bartender table (Bartenders)
+                    const bartender = await prisma.bartender.findUnique({
+                        where: {
+                            email: credentials.username,
+                        },
+                    })
+
+                    console.log("Bartender found in DB:", bartender ? "Yes" : "No")
+
+                    if (bartender && bartender.password) {
+                        // In production, compare hashed password!
+                        if (bartender.password !== credentials.password) {
+                            console.log("Password mismatch for bartender")
+                            return null
+                        }
+
+                        console.log("Login successful for bartender")
+                        return {
+                            id: bartender.id,
+                            name: `${bartender.name} ${bartender.surname}`,
+                            role: bartender.email === "filipevieirawho@gmail.com" ? "ADMIN" : "BARTENDER",
+                            userType: "bartender",
+                        }
                     }
+                } catch (error) {
+                    console.error("Database error during auth:", error)
                 }
 
-                // Second, check the Bartender table (Bartenders)
-                const bartender = await prisma.bartender.findUnique({
-                    where: {
-                        email: credentials.username,
-                    },
-                })
-
-                if (bartender && bartender.password) {
-                    // In production, compare hashed password!
-                    if (bartender.password !== credentials.password) {
-                        return null
-                    }
-
-                    return {
-                        id: bartender.id,
-                        name: `${bartender.name} ${bartender.surname}`,
-                        role: bartender.email === "filipevieirawho@gmail.com" ? "ADMIN" : "BARTENDER",
-                        userType: "bartender",
-                    }
-                }
-
+                console.log("Auth failed: User not found or error")
                 return null
             },
         }),
