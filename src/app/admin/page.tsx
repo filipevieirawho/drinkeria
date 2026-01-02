@@ -36,19 +36,13 @@ export default async function AdminDashboard({
         } : {}
     })
 
-    const bartendersCount = await prisma.bartender.count({
-        where: selectedYear ? {
-            events: {
-                some: {
-                    event: eventFilter
-                }
-            }
-        } : {}
+    const events = await prisma.event.findMany({
+        where: eventFilter,
+        select: { peopleCount: true }
     })
 
-    const eventsCount = await prisma.event.count({
-        where: eventFilter
-    })
+    const eventsCount = events.length
+    const totalPeople = events.reduce((sum: number, event: any) => sum + (event.peopleCount || 0), 0)
 
     // Fetch logs filtered by year
     const logs = await prisma.drinkLog.findMany({
@@ -93,15 +87,6 @@ export default async function AdminDashboard({
             <div className="grid gap-4 grid-cols-2">
                 <Card className="flex flex-col shadow-none border">
                     <CardHeader className="flex flex-row items-center justify-start space-y-0 pb-2 gap-2">
-                        <Martini className="h-4 w-4 text-muted-foreground" />
-                        <CardTitle className="text-sm font-medium">Drinks</CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex-1 flex flex-col justify-center">
-                        <div className="text-2xl font-bold">{drinksCount}</div>
-                    </CardContent>
-                </Card>
-                <Card className="flex flex-col shadow-none border">
-                    <CardHeader className="flex flex-row items-center justify-start space-y-0 pb-2 gap-2">
                         <Martini className="h-4 w-4 text-primary" />
                         <CardTitle className="text-sm font-medium">Servidos</CardTitle>
                     </CardHeader>
@@ -112,10 +97,19 @@ export default async function AdminDashboard({
                 <Card className="flex flex-col shadow-none border">
                     <CardHeader className="flex flex-row items-center justify-start space-y-0 pb-2 gap-2">
                         <Users className="h-4 w-4 text-muted-foreground" />
-                        <CardTitle className="text-sm font-medium">Bartenders</CardTitle>
+                        <CardTitle className="text-sm font-medium">Pessoas</CardTitle>
                     </CardHeader>
                     <CardContent className="flex-1 flex flex-col justify-center">
-                        <div className="text-2xl font-bold">{bartendersCount}</div>
+                        <div className="text-2xl font-bold">{formatNumber(totalPeople)}</div>
+                    </CardContent>
+                </Card>
+                <Card className="flex flex-col shadow-none border">
+                    <CardHeader className="flex flex-row items-center justify-start space-y-0 pb-2 gap-2">
+                        <Martini className="h-4 w-4 text-muted-foreground" />
+                        <CardTitle className="text-sm font-medium">Drinks</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex-1 flex flex-col justify-center">
+                        <div className="text-2xl font-bold">{drinksCount}</div>
                     </CardContent>
                 </Card>
                 <Card className="flex flex-col shadow-none border">
