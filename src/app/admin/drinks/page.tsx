@@ -44,6 +44,15 @@ export default async function DrinksPage({
         orderBy: { name: "asc" },
     })
 
+    const titleMap: Record<string, string> = {
+        CLASSIC: "Drinks Clássicos",
+        SIGNATURE: "Drinks Assinatura",
+        MOCKTAIL: "Drinks Mocktail",
+        SHOT: "Shots",
+    }
+
+    const displayTitle = type && type !== "all" ? titleMap[type] || "Drinks" : "Todos os Drinks"
+
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
@@ -57,7 +66,7 @@ export default async function DrinksPage({
 
             <div className="flex items-center justify-between">
                 <div className="text-sm text-muted-foreground">
-                    Total de drinks: <span className="font-medium text-foreground">{drinks.length}</span>
+                    {displayTitle}: <span className="font-medium text-foreground">{drinks.length}</span>
                 </div>
                 <DrinksToolbar />
             </div>
@@ -66,9 +75,9 @@ export default async function DrinksPage({
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Nome</TableHead>
-                            <TableHead>Tipo</TableHead>
-                            <TableHead className="text-right">Ações</TableHead>
+                            <TableHead className="uppercase">Nome</TableHead>
+                            <TableHead className="uppercase">Tipo</TableHead>
+                            <TableHead className="text-right uppercase">Ações</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
