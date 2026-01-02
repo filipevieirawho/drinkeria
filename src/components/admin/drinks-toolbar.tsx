@@ -33,7 +33,7 @@ export function DrinksToolbar() {
             </SelectTrigger>
             <SelectContent>
                 <SelectItem value="all">Todos os Tipos</SelectItem>
-                <SelectItem value="CLASSIC">Clássico</SelectItem>
+                <SelectItem value="CLASSIC">Clássicos</SelectItem>
                 <SelectItem value="SIGNATURE">Assinatura</SelectItem>
                 <SelectItem value="MOCKTAIL">Mocktail (Sem Álcool)</SelectItem>
                 <SelectItem value="SHOT">Shot</SelectItem>
