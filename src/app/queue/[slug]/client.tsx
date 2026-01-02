@@ -110,12 +110,12 @@ export function QueueClient({ eventId }: { eventId: string }) {
                                 }`}
                             onClick={() => handleItemClick(item)}
                         >
-                            <CardContent className="p-6 flex flex-col items-center text-center select-none">
-                                <span className="text-3xl font-bold mb-2">
+                            <CardContent className="p-4 flex flex-col items-center text-center select-none">
+                                <span className="text-3xl font-bold mb-1">
                                     {item.drinkName} {item.quantity > 1 && <span className="text-primary ml-1">({item.quantity}x)</span>}
                                 </span>
-                                <span className="text-xl text-muted-foreground">{item.customerName}</span>
-                                <span className="text-xs text-muted-foreground mt-4">Toque para finalizar</span>
+                                <span className="text-lg text-muted-foreground">{item.customerName}</span>
+                                <span className="text-xs text-muted-foreground mt-2">Toque para finalizar</span>
                             </CardContent>
                         </Card>
                     ))}
