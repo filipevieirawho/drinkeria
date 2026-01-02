@@ -5,6 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { getQueue, updateDrinkStatus } from "./actions"
 import { toast } from "sonner"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
+import { ArrowLeft } from "lucide-react"
 
 type QueueItem = {
     id: string
@@ -46,32 +49,46 @@ export function QueueClient({ eventId }: { eventId: string }) {
     const pendingItems = queue.filter(item => item.status === 'PENDING')
 
     return (
-        <div className="max-w-2xl mx-auto">
-            <h1 className="text-xl font-bold mb-4">Próximos Pedidos ({pendingItems.length})</h1>
-            <div className="flex flex-col gap-4">
-                {queue.filter(item => item.status === 'PENDING').map((item, index) => (
-                    <Card
-                        key={item.id}
-                        className={`cursor-pointer hover:scale-105 transition-transform active:scale-95 ${index === 0
-                            ? "bg-green-100 border-green-200 dark:bg-green-900/20 dark:border-green-900 shadow-lg scale-[1.02]"
-                            : "bg-secondary/50 border-secondary"
-                            }`}
-                        onClick={() => handleItemClick(item)}
-                    >
-                        <CardContent className="p-6 flex flex-col items-center text-center select-none">
-                            <span className="text-3xl font-bold mb-2">
-                                {item.drinkName} {item.quantity > 1 && <span className="text-primary ml-1">({item.quantity}x)</span>}
-                            </span>
-                            <span className="text-xl text-muted-foreground">{item.customerName}</span>
-                            <span className="text-xs text-muted-foreground mt-4">Toque para finalizar</span>
-                        </CardContent>
-                    </Card>
-                ))}
-                {queue.filter(item => item.status === 'PENDING').length === 0 && (
-                    <div className="text-center text-muted-foreground py-12 text-lg">
-                        A fila está vazia!
+        <div className="flex flex-col h-full">
+            <header className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-4">
+                    <Button variant="outline" size="icon" asChild>
+                        <Link href="/admin/events">
+                            <ArrowLeft className="h-4 w-4" />
+                        </Link>
+                    </Button>
+                    <div>
+                        <h1 className="text-xl font-bold">Próximos pedidos ({pendingItems.length})</h1>
                     </div>
-                )}
+                </div>
+            </header>
+
+            <div className="max-w-2xl mx-auto w-full flex-1">
+                <div className="flex flex-col gap-4">
+                    {queue.filter(item => item.status === 'PENDING').map((item, index) => (
+                        <Card
+                            key={item.id}
+                            className={`cursor-pointer hover:scale-105 transition-transform active:scale-95 ${index === 0
+                                ? "bg-green-100 border-green-200 dark:bg-green-900/20 dark:border-green-900 shadow-lg scale-[1.02]"
+                                : "bg-secondary/50 border-secondary"
+                                }`}
+                            onClick={() => handleItemClick(item)}
+                        >
+                            <CardContent className="p-6 flex flex-col items-center text-center select-none">
+                                <span className="text-3xl font-bold mb-2">
+                                    {item.drinkName} {item.quantity > 1 && <span className="text-primary ml-1">({item.quantity}x)</span>}
+                                </span>
+                                <span className="text-xl text-muted-foreground">{item.customerName}</span>
+                                <span className="text-xs text-muted-foreground mt-4">Toque para finalizar</span>
+                            </CardContent>
+                        </Card>
+                    ))}
+                    {queue.filter(item => item.status === 'PENDING').length === 0 && (
+                        <div className="text-center text-muted-foreground py-12 text-lg">
+                            A fila está vazia!
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     )
