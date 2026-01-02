@@ -19,7 +19,7 @@ export default async function AdminLayout({
     return (
         <div className="flex min-h-screen flex-col">
             <header className="border-b bg-background">
-                <div className="container px-4 py-4 space-y-4">
+                <div className="container px-4 pt-4 pb-2 space-y-4">
                     <div className="flex items-center justify-between">
                         <Link href="/admin" className="text-xl font-bold">
                             🍸 Drinker.IA
