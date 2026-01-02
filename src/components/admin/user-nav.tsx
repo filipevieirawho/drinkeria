@@ -20,7 +20,7 @@ import { signOut } from "next-auth/react"
 export function UserNav({
     user,
 }: {
-    user: { name?: string | null; email?: string | null }
+    user: { name?: string | null; email?: string | null; image?: string | null }
 }) {
     const initials = user.name
         ? user.name
@@ -36,7 +36,7 @@ export function UserNav({
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="h-8 w-8">
-                        <AvatarImage src="/avatars/01.png" alt={user.name || ""} />
+                        <AvatarImage src={user.image || "/avatars/01.png"} alt={user.name || ""} />
                         <AvatarFallback>{initials}</AvatarFallback>
                     </Avatar>
                 </Button>

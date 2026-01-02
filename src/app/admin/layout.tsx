@@ -24,7 +24,7 @@ export default async function AdminLayout({
                         <Link href="/admin" className="text-xl font-bold">
                             🍸 Drinker.IA
                         </Link>
-                        <UserNav user={{ name: session.user.name, email: session.user.email }} />
+                        <UserNav user={{ name: session.user.name, email: session.user.email, image: session.user.image }} />
                     </div>
                     <AdminNav role={session.user.role} className="-mx-4 px-4 sm:mx-0 sm:px-0" />
                 </div>

@@ -42,6 +42,7 @@ export const authOptions: NextAuthOptions = {
                             name: user.username,
                             role: user.role,
                             userType: "user",
+                            image: null,
                         }
                     }
 
@@ -63,6 +64,7 @@ export const authOptions: NextAuthOptions = {
                             name: `${bartender.name} ${bartender.surname}`,
                             role: bartender.email === "filipevieirawho@gmail.com" ? "ADMIN" : "BARTENDER",
                             userType: "bartender",
+                            image: bartender.photo,
                         }
                     }
                 } catch (error) {
@@ -79,6 +81,7 @@ export const authOptions: NextAuthOptions = {
                 session.user.id = token.id as string
                 session.user.role = token.role as string
                 session.user.userType = token.userType as string
+                session.user.image = token.picture
             }
             return session
         },
@@ -87,6 +90,7 @@ export const authOptions: NextAuthOptions = {
                 token.id = user.id
                 token.role = user.role
                 token.userType = (user as any).userType
+                token.picture = user.image
             }
             return token
         },
