@@ -49,7 +49,7 @@ export default async function DrinksPage({
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold tracking-tight">Drinks</h1>
                 {role === "ADMIN" && (
-                    <Button asChild>
+                    <Button asChild className="bg-mojito hover:bg-mojito/90 text-white">
                         <Link href="/admin/drinks/new">Add Drink</Link>
                     </Button>
                 )}
