@@ -44,7 +44,7 @@ export function QueueClient({ eventId }: { eventId: string }) {
                     wakeLock = await (navigator as any).wakeLock.request('screen');
                     console.log('Wake Lock is active!');
                 }
-            } catch (err) {
+            } catch (err: any) {
                 console.error(`${err.name}, ${err.message}`);
             }
         };
