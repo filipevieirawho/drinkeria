@@ -54,10 +54,7 @@ export default async function EventsPage() {
                                     <div className="flex flex-col">
                                         <span className="text-base">{event.name}</span>
                                         <span className="text-xs text-muted-foreground">
-                                            {new Date(event.date).toLocaleDateString()}
-                                        </span>
-                                        <span className="text-xs text-muted-foreground">
-                                            {event.location}
+                                            {new Date(event.date).toLocaleDateString()} às {new Date(event.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                         </span>
                                     </div>
                                 </TableCell>
