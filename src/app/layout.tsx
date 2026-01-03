@@ -19,6 +19,22 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "🍸 Drinker.IA",
   description: "Sistema de gestão de drinks para eventos",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Drinker.IA",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+};
+
+export const viewport = {
+  themeColor: "#2563eb",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
