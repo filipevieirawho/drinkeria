@@ -85,7 +85,29 @@ export function QueueClient({ eventId }: { eventId: string }) {
 
     const pendingItems = queue.filter(item => item.status === 'PENDING')
     const totalWaitTimeSeconds = pendingItems.reduce((acc, item) => acc + (item.quantity * item.preparationTime), 0)
-    const totalWaitTimeMinutes = Math.ceil(totalWaitTimeSeconds / 60)
+
+    const [timeLeft, setTimeLeft] = useState(totalWaitTimeSeconds)
+
+    useEffect(() => {
+        setTimeLeft(totalWaitTimeSeconds)
+    }, [totalWaitTimeSeconds])
+
+    useEffect(() => {
+        if (timeLeft <= 0) return
+
+        const timer = setInterval(() => {
+            setTimeLeft(prev => Math.max(0, prev - 1))
+        }, 1000)
+
+        return () => clearInterval(timer)
+    }, [timeLeft])
+
+    const formatTime = (seconds: number) => {
+        const h = Math.floor(seconds / 3600)
+        const m = Math.floor((seconds % 3600) / 60)
+        const s = seconds % 60
+        return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`
+    }
 
     return (
         <div className="flex flex-col h-full">
@@ -98,14 +120,20 @@ export function QueueClient({ eventId }: { eventId: string }) {
                     </Button>
                     <div>
                         <h1 className="text-xl font-bold">Próximos pedidos ({pendingItems.length})</h1>
-                        {pendingItems.length > 0 && (
-                            <p className="text-sm text-muted-foreground">
-                                Tempo estimado: <span className="font-medium text-foreground">{totalWaitTimeMinutes} min</span>
-                            </p>
-                        )}
                     </div>
                 </div>
             </header>
+
+            {pendingItems.length > 0 && (
+                <div className="mb-6 flex justify-center">
+                    <div className="bg-card border rounded-xl p-6 shadow-sm text-center min-w-[300px]">
+                        <p className="text-sm text-muted-foreground mb-1 uppercase tracking-wider font-medium">Tempo Estimado</p>
+                        <div className="text-5xl font-mono font-bold tracking-tight tabular-nums">
+                            {formatTime(timeLeft)}
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <div className="max-w-2xl mx-auto w-full flex-1">
                 <div className="flex flex-col gap-4">
