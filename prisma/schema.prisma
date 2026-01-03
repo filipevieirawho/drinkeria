@@ -24,7 +24,7 @@ model Drink {
   description String?
   ingredients String?
   type        String       @default("CLASSIC")
-  preparationTime Int      @default(5)
+  preparationTime Int      @default(60)
   image       String?
   active      Boolean      @default(true)
   createdAt   DateTime     @default(now())

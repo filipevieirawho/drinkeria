@@ -141,13 +141,13 @@ export function DrinkForm({ drink }: { drink?: Drink }) {
                 </div>
 
                 <div className="space-y-2">
-                    <Label htmlFor="preparationTime">Tempo de Preparo (min)</Label>
+                    <Label htmlFor="preparationTime">Tempo de Preparo (segundos)</Label>
                     <Input
                         id="preparationTime"
                         name="preparationTime"
                         type="number"
                         min="1"
-                        defaultValue={drink?.preparationTime || 5}
+                        defaultValue={drink?.preparationTime || 60}
                         required
                     />
                 </div>

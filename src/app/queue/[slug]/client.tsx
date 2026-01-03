@@ -84,7 +84,8 @@ export function QueueClient({ eventId }: { eventId: string }) {
     }
 
     const pendingItems = queue.filter(item => item.status === 'PENDING')
-    const totalWaitTime = pendingItems.reduce((acc, item) => acc + (item.quantity * item.preparationTime), 0)
+    const totalWaitTimeSeconds = pendingItems.reduce((acc, item) => acc + (item.quantity * item.preparationTime), 0)
+    const totalWaitTimeMinutes = Math.ceil(totalWaitTimeSeconds / 60)
 
     return (
         <div className="flex flex-col h-full">
@@ -99,7 +100,7 @@ export function QueueClient({ eventId }: { eventId: string }) {
                         <h1 className="text-xl font-bold">Próximos pedidos ({pendingItems.length})</h1>
                         {pendingItems.length > 0 && (
                             <p className="text-sm text-muted-foreground">
-                                Tempo estimado: <span className="font-medium text-foreground">{totalWaitTime} min</span>
+                                Tempo estimado: <span className="font-medium text-foreground">{totalWaitTimeMinutes} min</span>
                             </p>
                         )}
                     </div>
