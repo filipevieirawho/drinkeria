@@ -24,7 +24,8 @@ export async function getQueue(eventId: string) {
         drinkName: item.drink.name,
         status: item.status,
         timestamp: item.timestamp,
-        quantity: item.quantity
+        quantity: item.quantity,
+        preparationTime: item.drink.preparationTime || 5
     }))
 }
 

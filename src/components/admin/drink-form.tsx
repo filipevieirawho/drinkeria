@@ -124,19 +124,33 @@ export function DrinkForm({ drink }: { drink?: Drink }) {
                 />
             </div>
 
-            <div className="space-y-2">
-                <Label htmlFor="type">Tipo</Label>
-                <Select name="type" defaultValue={drink?.type || "CLASSIC"}>
-                    <SelectTrigger>
-                        <SelectValue placeholder="Selecione o tipo" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="CLASSIC">Clássicos</SelectItem>
-                        <SelectItem value="SIGNATURE">Assinatura</SelectItem>
-                        <SelectItem value="MOCKTAIL">Mocktail (Sem Álcool)</SelectItem>
-                        <SelectItem value="SHOT">Shot</SelectItem>
-                    </SelectContent>
-                </Select>
+            <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                    <Label htmlFor="type">Tipo</Label>
+                    <Select name="type" defaultValue={drink?.type || "CLASSIC"}>
+                        <SelectTrigger>
+                            <SelectValue placeholder="Selecione o tipo" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="CLASSIC">Clássicos</SelectItem>
+                            <SelectItem value="SIGNATURE">Assinatura</SelectItem>
+                            <SelectItem value="MOCKTAIL">Mocktail (Sem Álcool)</SelectItem>
+                            <SelectItem value="SHOT">Shot</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+
+                <div className="space-y-2">
+                    <Label htmlFor="preparationTime">Tempo de Preparo (min)</Label>
+                    <Input
+                        id="preparationTime"
+                        name="preparationTime"
+                        type="number"
+                        min="1"
+                        defaultValue={drink?.preparationTime || 5}
+                        required
+                    />
+                </div>
             </div>
 
             {drink && (

@@ -18,6 +18,7 @@ export async function createDrink(formData: FormData) {
     let ingredients = formData.get("ingredients") as string
     const type = formData.get("type") as string
     const image = formData.get("image") as string
+    const preparationTime = Number(formData.get("preparationTime")) || 5
 
     // Validate and clean ingredients JSON
     try {
@@ -36,6 +37,7 @@ export async function createDrink(formData: FormData) {
             description,
             ingredients,
             type,
+            preparationTime,
             image,
             active: true,
         },
@@ -57,6 +59,7 @@ export async function updateDrink(id: string, formData: FormData) {
     const type = formData.get("type") as string
     const image = formData.get("image") as string
     const active = formData.get("active") === "on"
+    const preparationTime = Number(formData.get("preparationTime")) || 5
 
     // Validate and clean ingredients JSON
     try {
@@ -76,6 +79,7 @@ export async function updateDrink(id: string, formData: FormData) {
             description,
             ingredients,
             type,
+            preparationTime,
             image,
             active,
         },
